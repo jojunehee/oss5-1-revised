@@ -1,8 +1,10 @@
+// App.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Modal, Button } from 'react-bootstrap';
-import backgroundImage from "./img/banner.png";
+import AddModal from './components/AddModal';
+import EditModal from './components/EditModal';
+import Header from './components/Header';
 
 function App() {
   //필요한 상태 변수, 함수 선언부------------------------------------------------------------
@@ -104,43 +106,7 @@ function App() {
   //------------------------------------------------------------필요한 상태 변수, 함수 선언부
   return (
     <div className="container">
-      <div
-        className="container-fluid text-white text-center py-5"
-        style={{
-          backgroundImage: `url(${backgroundImage})`, 
-          backgroundSize: "cover", 
-          backgroundPosition: "center", 
-          backgroundRepeat: "no-repeat", 
-          height: "40vh",
-          display: "flex", // Flexbox 사용
-          flexDirection: "column", // 수직 방향 정렬
-          alignItems: "center", // 가로 중앙 정렬
-          justifyContent: "center" // 세로 중앙 정렬
-        }}
-      >
-        <div className="container">
-          <h1
-            className="display-4 fw-bold mb-4"
-            style={{
-              textShadow: '4px 4px 10px rgba(1, 1, 1, 1)'
-            }}
-          >
-            택배 관리 시스템
-          </h1>
-
-          <p className="lead fw-bold" style={{
-            textShadow: '4px 4px 10px rgba(1, 1, 1, 1)'
-          }}>쉽고 빠르게 택배를 관리하세요.</p>
-          <button type="button" className="btn btn-danger mb-3 btn-lg" onClick={handleShowAddModal}>
-            새 택배 추가
-          </button>
-        </div>
-      </div>
-
-
-      {/*와 JSX에서 주석 여러 줄 쓰려면 기본 주석에 중괄호로 감싸야 함;; JSX뭔가 편한데 자꾸 내 상식을 파괴하네...*/}
-      {/* 택배 추가 버튼 */}
-
+      <Header handleShowAddModal={handleShowAddModal} />
 
       {/* 목록 */}
       <table className="table table-striped">
@@ -180,7 +146,6 @@ function App() {
                   </button>
                 </div>
               </td>
-
             </tr>
           ))}
         </tbody>
@@ -188,173 +153,23 @@ function App() {
 
       {/* 수정 모달 */}
       {currentParcel && (
-        <Modal show={showModal} onHide={handleCloseModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>기존 택배 정보 수정</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-
-            <form>
-              <div className="mb-3">
-                <label className="form-label">운송장 번호</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="tracking_number"
-                  value={currentParcel.tracking_number}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">보내는 사람</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="sender_name"
-                  value={currentParcel.sender_name}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">받는 사람</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="recipient_name"
-                  value={currentParcel.recipient_name}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">주소</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="recipient_address"
-                  value={currentParcel.recipient_address}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">상태</label>
-                <select
-                  className="form-select"
-                  name="status"
-                  value={currentParcel.status}
-                  onChange={handleInputChange}
-                >
-                  <option value="배송 준비">배송 준비</option>
-                  <option value="배송 중">배송 중</option>
-                  <option value="배송 완료">배송 완료</option>
-                  <option value="반송">반송</option>
-                </select>
-              </div>
-              <div className="mb-3">
-                <label className="form-label">비용</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  name="cost"
-                  value={currentParcel.cost}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
-              취소
-            </Button>
-            <Button variant="danger" onClick={saveChanges}>
-              저장
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <EditModal
+          show={showModal}
+          handleClose={handleCloseModal}
+          handleInputChange={handleInputChange}
+          saveChanges={saveChanges}
+          currentParcel={currentParcel}
+        />
       )}
 
       {/* 추가 모달 */}
-      <Modal show={showAddModal} onHide={handleCloseAddModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>새 택배 추가</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form>
-            <div className="mb-3">
-              <label className="form-label">운송장 번호</label>
-
-              <input
-                type="text"
-                className="form-control"
-                name="tracking_number"
-                value={newParcel.tracking_number}
-                onChange={handleNewParcelChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">보내는 사람</label>
-              <input
-                type="text"
-                className="form-control"
-                name="sender_name"
-                value={newParcel.sender_name}
-                onChange={handleNewParcelChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">받는 사람</label>
-              <input
-                type="text"
-                className="form-control"
-                name="recipient_name"
-                value={newParcel.recipient_name}
-                onChange={handleNewParcelChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">주소</label>
-              <input
-                type="text"
-                className="form-control"
-                name="recipient_address"
-                value={newParcel.recipient_address}
-                onChange={handleNewParcelChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">상태</label>
-              <select
-                className="form-select"
-                name="status"
-                value={newParcel.status}
-                onChange={handleNewParcelChange}
-              >
-                <option value="배송 준비">배송 준비</option>
-                <option value="배송 중">배송 중</option>
-                <option value="배송 완료">배송 완료</option>
-                <option value="반송">반송</option>
-              </select>
-            </div>
-            <div className="mb-3">
-              <label className="form-label">비용</label>
-              <input
-                type="number"
-                className="form-control"
-                name="cost"
-                value={newParcel.cost}
-                onChange={handleNewParcelChange}
-              />
-            </div>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseAddModal}>
-            취소
-          </Button>
-          <Button variant="danger" onClick={addParcel}>
-            저장
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <AddModal
+        show={showAddModal}
+        handleClose={handleCloseAddModal}
+        handleNewParcelChange={handleNewParcelChange}
+        addParcel={addParcel}
+        newParcel={newParcel}
+      />
     </div>
   );
 }
