@@ -1,11 +1,11 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParcel }) {
+function EditModal({ show, handleClose, handleInputChange, saveChanges, currentParcel }) {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>새 택배 추가</Modal.Title>
+        <Modal.Title>수정하기</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form>
@@ -15,8 +15,8 @@ function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParc
               type="text"
               className="form-control"
               name="tracking_number"
-              value={newParcel.tracking_number}
-              onChange={handleNewParcelChange}
+              value={currentParcel?.tracking_number || ''} // Optional chaining 및 기본값 추가
+              onChange={handleInputChange}
             />
           </div>
           <div className="mb-3">
@@ -25,8 +25,8 @@ function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParc
               type="text"
               className="form-control"
               name="sender_name"
-              value={newParcel.sender_name}
-              onChange={handleNewParcelChange}
+              value={currentParcel?.sender_name || ''} // Optional chaining 및 기본값 추가
+              onChange={handleInputChange}
             />
           </div>
           <div className="mb-3">
@@ -35,8 +35,8 @@ function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParc
               type="text"
               className="form-control"
               name="recipient_name"
-              value={newParcel.recipient_name}
-              onChange={handleNewParcelChange}
+              value={currentParcel?.recipient_name || ''} // 기본값 추가
+              onChange={handleInputChange}
             />
           </div>
           <div className="mb-3">
@@ -45,8 +45,8 @@ function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParc
               type="text"
               className="form-control"
               name="recipient_address"
-              value={newParcel.recipient_address}
-              onChange={handleNewParcelChange}
+              value={currentParcel?.recipient_address || ''} // 기본값 추가
+              onChange={handleInputChange}
             />
           </div>
           <div className="mb-3">
@@ -54,8 +54,8 @@ function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParc
             <select
               className="form-select"
               name="status"
-              value={newParcel.status}
-              onChange={handleNewParcelChange}
+              value={currentParcel?.status || ''} // 기본값 추가
+              onChange={handleInputChange}
             >
               <option value="배송 준비">배송 준비</option>
               <option value="배송 중">배송 중</option>
@@ -69,17 +69,17 @@ function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParc
               type="number"
               className="form-control"
               name="cost"
-              value={newParcel.cost}
-              onChange={handleNewParcelChange}
+              value={currentParcel?.cost || ''} // 기본값 추가
+              onChange={handleInputChange}
             />
           </div>
         </form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          취소
+          닫기
         </Button>
-        <Button variant="danger" onClick={addParcel}>
+        <Button variant="primary" onClick={saveChanges}>
           저장
         </Button>
       </Modal.Footer>
@@ -87,4 +87,4 @@ function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParc
   );
 }
 
-export default AddModal;
+export default EditModal;

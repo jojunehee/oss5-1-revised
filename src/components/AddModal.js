@@ -15,7 +15,7 @@ function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParc
               type="text"
               className="form-control"
               name="tracking_number"
-              value={newParcel.tracking_number}
+              value={newParcel.tracking_number || ''}
               onChange={handleNewParcelChange}
             />
           </div>
@@ -25,7 +25,7 @@ function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParc
               type="text"
               className="form-control"
               name="sender_name"
-              value={newParcel.sender_name}
+              value={newParcel.sender_name || ''}
               onChange={handleNewParcelChange}
             />
           </div>
@@ -35,7 +35,7 @@ function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParc
               type="text"
               className="form-control"
               name="recipient_name"
-              value={newParcel.recipient_name}
+              value={newParcel.recipient_name || ''}
               onChange={handleNewParcelChange}
             />
           </div>
@@ -45,7 +45,7 @@ function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParc
               type="text"
               className="form-control"
               name="recipient_address"
-              value={newParcel.recipient_address}
+              value={newParcel.recipient_address || ''}
               onChange={handleNewParcelChange}
             />
           </div>
@@ -54,7 +54,7 @@ function AddModal({ show, handleClose, handleNewParcelChange, addParcel, newParc
             <select
               className="form-select"
               name="status"
-              value={newParcel.status}
+              value={newParcel.status || ''}
               onChange={handleNewParcelChange}
             >
               <option value="배송 준비">배송 준비</option>

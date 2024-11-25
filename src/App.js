@@ -24,7 +24,7 @@ function App() {
     sender_name: '',      // 새로 추가할 보내는 사람 이름
     recipient_name: '',   // 새로 추가할 받는 사람 이름
     recipient_address: '',// 새로 추가할 받는 사람 주소
-    status: '',           // 새로 추가할 상태 (배송 준비, 배송 중 등)
+    status: '배송 준비',           // 새로 추가할 상태 (배송 준비, 배송 중 등)
     cost: ''              // 새로 추가할 배송 비용
   });
   // "추가 모달"에서 입력받은 데이터를 저장하는 상태 변수
@@ -57,7 +57,7 @@ function App() {
     setShowAddModal(false);
   };
 
-  // 입력 값 업데이트. 모달 내부에서 매 입력에 반응
+  //모달 매 입력에 반응하여 업데이트
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCurrentParcel({ ...currentParcel, [name]: value });
